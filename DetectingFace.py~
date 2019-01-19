@@ -1,0 +1,11 @@
+import cognitive_face as CF
+"""
+
+"""
+
+response = CF.face.detect('tejas-test.jpg')
+face_ids = [d['faceId'] for d in response]
+print(face_ids)
+
+identified_faces = CF.face.identify(face_ids, PERSON_GROUP_ID)
+print(identified_faces)
