@@ -23,6 +23,7 @@ class APIClient:
     def add_person(self, name, user_data, img_dir):
         response = CF.person.create(self.PERSON_GROUP_ID, name, user_data)
         person_id = response["personId"]
+        firebase_admin.db.push(response)
         for img in glob.glob(img_dir):
             CF.person.add_face(img, self.PERSON_GROUP_ID, person_id)
 
