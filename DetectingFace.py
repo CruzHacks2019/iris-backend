@@ -15,3 +15,7 @@ print(face_ids)
 
 identified_faces = CF.face.identify(face_ids, PERSON_GROUP_ID)
 print(identified_faces)
+
+person_id = identified_faces[0]['candidates'][0]['personId']
+response = CF.person.get(PERSON_GROUP_ID, person_id)
+print(response['name'])
