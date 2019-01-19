@@ -107,3 +107,4 @@ uploads/
 
 # Python Key
 APIKey.py
+GOOGLE_APPLICATION_CREDENTIALS.json
