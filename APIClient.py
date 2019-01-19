@@ -60,10 +60,16 @@ class APIClient:
             bucket = storage_client.get_bucket(bucket_name)
             destination_blob_name = md5(img.encode('utf-8')).hexdigest()
             blob = bucket.blob(destination_blob_name)
-
             blob.upload_from_filename(img)
 
-            print('File {} uploaded to {}.'.format(img.encode('utf-8'), destination_blob_name))
+            url = "https://storage.cloud.google.com/training-images-3519435695/"+ destination_blob_name
+            new_array = []
+            for img in user_ref["imgUrls"]:
+                new_array.append(img)
+            new_array.append(url)
+            user_ref.update({imgUrls:new_array})
+
+            print('File {} uploaded to {}.'.format(img, destination_blob_name))
 
     def return_message_from_face(self, path_to_img):
         response = CF.face.detect(path_to_img)
