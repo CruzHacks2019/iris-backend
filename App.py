@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_bootstrap import Bootstrap
 """
 
@@ -15,8 +15,8 @@ def index():
 @app.route('/detect-face', methods=['POST'])
 def detect_face():
     # TODO:
-
-
+    kill_me = {"Name":"Cruz Hacks" , "Project":"ALzheimers"}
+    return jsonify(kill_me)
 
 if __name__=='__main__':
     app.run(debug=True)
