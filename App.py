@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask_bootstrap import Bootstrap
 import base64
 """
@@ -17,14 +17,14 @@ def detect_face():
     # TODO:
     #kill_me = {"Name":"Cruz Hacks" , "Project":"ALzheimers"}
     
-    img_content = request.body
+    img_content = request.data
     decoded_img = base64.b64decode(img_content)
     #API CALL RIGHT HERE
     #print(decoded_img)
     # Temporarily save image as file
     with open("imageToSave.png", "wb") as fh:
         fh.write(decoded_img)
-    return jsonify(decoded_img) # will have to returned json dat from API call
+    #return jsonify(decoded_img) # will have to returned json dat from API call
 
 if __name__=='__main__':
     app.run(debug=True)
