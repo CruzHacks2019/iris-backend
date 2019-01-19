@@ -107,4 +107,10 @@ uploads/
 
 # Python Key
 APIKey.py
+<<<<<<< HEAD
 GOOGLE_APPLICATION_CREDENTIALS.json
+=======
+
+# Testing
+Testing/
+>>>>>>> c7c64d2b62977428f136cc64302c90e3233a1856
