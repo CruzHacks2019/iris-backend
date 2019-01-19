@@ -6,3 +6,4 @@ cognitive_face
 pillow
 glob3
 firebase-admin
+google-cloud-storage

@@ -3,11 +3,26 @@ from APIKey import *
 import glob
 import firebase_admin
 from firebase_admin import credentials, db
+from hashlib import md5
 
 cred = credentials.Certificate('project-anti-alz-firebase-adminsdk-zlh54-decaa0ce0a.json') 
 firebase_admin.initialize_app(cred, {'databaseURL' : 'https://project-anti-alz.firebaseio.com/'})
 #default_app = firebase_admin.initialize_app(cred)
 root = db.reference()
+
+# Imports the Google Cloud client library
+from google.cloud import storage
+
+# Instantiates a client
+storage_client = storage.Client()
+
+# The name for the new bucket
+bucket_name = 'training-images-3519435695'
+
+# Creates the new bucket
+# bucket = storage_client.create_bucket(bucket_name)
+
+# print('Bucket {} created.'.format(bucket.name))
 """
 2019 Cruzhacks
 """
@@ -32,7 +47,7 @@ class APIClient:
                 "name" : ref['name'], 
                 "userData" : ref['userData'], 
                 "imgUrls": [], 
-                "msg" : "You met " + result["name"] + " he is your " + result["userData"] + ".",
+                "msg" : "You met " + ref["name"] + " he is your " + ref["userData"] + ".",
                 "additionalMsg" : "Replace Me"
             }
         })
@@ -40,6 +55,15 @@ class APIClient:
         for img in glob.glob(img_dir):
             CF.person.add_face(img, self.PERSON_GROUP_ID, person_id)
             # now we need to add imgs to cloud in here
+            """Uploads a file to the bucket."""
+            storage_client = storage.Client()
+            bucket = storage_client.get_bucket(bucket_name)
+            destination_blob_name = md5(img.encode('utf-8')).hexdigest()
+            blob = bucket.blob(destination_blob_name)
+
+            blob.upload_from_filename(img)
+
+            print('File {} uploaded to {}.'.format(img.encode('utf-8'), destination_blob_name))
 
     def return_message_from_face(self, path_to_img):
         response = CF.face.detect(path_to_img)
