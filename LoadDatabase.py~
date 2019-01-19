@@ -1,0 +1,12 @@
+import cognitive_face as CF
+
+"""
+2019 Cruz Hacks
+"""
+
+SUB_KEY = 'REPLACE'
+BASE_URL = 'https://westus.api.cognitive.microsoft.com/face/v1.0/'
+PERSON_GROUP_ID = "known_persons"
+CF.BaseUrl.set(BASE_URL)
+CF.Key.set(SUB_KEY)
+    

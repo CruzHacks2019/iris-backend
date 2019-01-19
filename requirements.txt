@@ -2,3 +2,5 @@ flask
 flask-bootstrap
 jsonify
 pybase64
+cognitive_face
+
