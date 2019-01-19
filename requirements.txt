@@ -5,4 +5,5 @@ pybase64
 cognitive_face
 pillow
 glob3
-
+requests
+python-firebase
