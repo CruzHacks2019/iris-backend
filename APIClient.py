@@ -2,9 +2,9 @@ import cognitive_face as CF
 from APIKey import *
 import glob
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials, db
 
-cred = credentials.Certificate('GOOGLE_APPLICATION_CREDENTIALS.json')
+cred = credentials.Certificate('project-anti-alz-firebase-adminsdk-zlh54-decaa0ce0a.json')
 default_app = firebase_admin.initialize_app(cred)
 """
 2019 Cruzhacks
