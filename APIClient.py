@@ -4,8 +4,10 @@ import glob
 import firebase_admin
 from firebase_admin import credentials, db
 
-cred = credentials.Certificate('project-anti-alz-firebase-adminsdk-zlh54-decaa0ce0a.json')
-default_app = firebase_admin.initialize_app(cred)
+cred = credentials.Certificate('project-anti-alz-firebase-adminsdk-zlh54-decaa0ce0a.json') 
+firebase_admin.initialize_app(cred, {'databaseURL' : 'https://project-anti-alz.firebaseio.com/'})
+#default_app = firebase_admin.initialize_app(cred)
+root = db.reference()
 """
 2019 Cruzhacks
 """
@@ -22,10 +24,22 @@ class APIClient:
 
     def add_person(self, name, user_data, img_dir):
         response = CF.person.create(self.PERSON_GROUP_ID, name, user_data)
-        person_id = response["personId"]
-        firebase_admin.db.push(response)
+        person_id = response["personId"] 
+        ref = CF.person.get(self.PERSON_GROUP_ID, person_id)
+        user_ref = root.child('users')
+        user_ref.set({
+            person_id : {
+                "name" : ref['name'], 
+                "userData" : ref['userData'], 
+                "imgUrls": [], 
+                "msg" : "You met " + result["name"] + " he is your " + result["userData"] + ".",
+                "additionalMsg" : "Replace Me"
+            }
+        })
+
         for img in glob.glob(img_dir):
             CF.person.add_face(img, self.PERSON_GROUP_ID, person_id)
+            # now we need to add imgs to cloud in here
 
     def return_message_from_face(self, path_to_img):
         response = CF.face.detect(path_to_img)
