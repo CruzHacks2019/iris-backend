@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from flask_bootstrap import Bootstrap
 import base64
+from hashlib import md5
 """
 
 """
@@ -22,7 +23,7 @@ def detect_face():
     #API CALL RIGHT HERE
     #print(decoded_img)
     # Temporarily save image as file
-    with open("imageToSave.png", "wb") as fh:
+    with open("uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png", "wb") as fh:
         fh.write(decoded_img)
     #return jsonify(decoded_img) # will have to returned json dat from API call
 
