@@ -38,13 +38,13 @@ Run:
 """
 #init
 BASE_URL = 'https://westus.api.cognitive.microsoft.com/face/v1.0/'
-PERSON_GROUP_ID = "people_two"
+PERSON_GROUP_ID = "people_three"
 CF.BaseUrl.set(BASE_URL)
 CF.Key.set(SUB_KEY)
 
 create_database("Known Persons", PERSON_GROUP_ID)
-add_person("tejas", "Training", "static/tejas/*.jpg", PERSON_GROUP_ID)
-add_person("andrew", "Training", "static/andrew/*.jpg", PERSON_GROUP_ID)
+add_person("Tejas", "Friend", "static/tejas/*.jpg", PERSON_GROUP_ID)
+add_person("Andrew", "Brother", "static/andrew/*.jpg", PERSON_GROUP_ID)
 CF.person_group.train(PERSON_GROUP_ID)
 
 time.sleep(5)
