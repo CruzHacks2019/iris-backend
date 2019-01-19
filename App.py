@@ -28,7 +28,7 @@ def detect_face():
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
     result = return_message_from_face(img_path)
-    result['msg'] = "You met Tejas at Robotics camp."
+    result['msg'] = "You met " + result["name"] + " he is your " + result["userData"] + "."
     return jsonify(result) # will have to returned json dat from API call
 
 if __name__=='__main__':
