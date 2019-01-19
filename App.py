@@ -12,6 +12,11 @@ bootstrap = Bootstrap(app)
 def index():
     return render_template("index.html")
 
+@app.route('/detect-face', methods=['POST'])
+def detect_face():
+    # TODO:
+
+
 
 if __name__=='__main__':
     app.run(debug=True)
