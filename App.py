@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request
 from flask_bootstrap import Bootstrap
 import base64
 from hashlib import md5
+from DetectingFace import *
 """
 
 """
@@ -23,9 +24,12 @@ def detect_face():
     #API CALL RIGHT HERE
     #print(decoded_img)
     # Temporarily save image as file
-    with open("uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png", "wb") as fh:
+    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
+    with open(img_path, "wb") as fh:
         fh.write(decoded_img)
-    #return jsonify(decoded_img) # will have to returned json dat from API call
+    result = return_message_from_face(img_path)
+    result['msg'] = "You met Tejas at Robotics camp."
+    return jsonify(result) # will have to returned json dat from API call
 
 if __name__=='__main__':
     app.run(debug=True)

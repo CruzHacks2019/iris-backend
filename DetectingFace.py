@@ -21,6 +21,6 @@ def return_message_from_face(path_to_img):
 
     person_id = identified_faces[0]['candidates'][0]['personId']
     response = CF.person.get(PERSON_GROUP_ID, person_id)
-    return(response)
+    return response 
 
 #print(return_message_from_face("tejas-test.jpg"))
