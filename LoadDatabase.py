@@ -1,6 +1,7 @@
 import cognitive_face as CF
 from PIL import Image
 import glob
+from APIKey import *
 import time
 """
 2019 Cruz Hacks
@@ -36,7 +37,6 @@ def add_images(directory, id):
 Run:
 """
 #init
-SUB_KEY = '36fee94e28fa469fa8df5deec07c8f1c'
 BASE_URL = 'https://westus.api.cognitive.microsoft.com/face/v1.0/'
 PERSON_GROUP_ID = "people_two"
 CF.BaseUrl.set(BASE_URL)
