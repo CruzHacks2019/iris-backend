@@ -21,6 +21,9 @@ def detect_face():
     decoded_img = base64.b64decode(img_content)
     #API CALL RIGHT HERE
     #print(decoded_img)
+    # Temporarily save image as file
+    with open("imageToSave.png", "wb") as fh:
+        fh.write(decoded_img)
     return jsonify(decoded_img) # will have to returned json dat from API call
 
 if __name__=='__main__':
