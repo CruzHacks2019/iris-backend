@@ -98,9 +98,6 @@ class APIClient:
             for x in identified_faces:
                 print(x)
                 results.append(x)
-                #person_id = x['candidates'][0]['personId']
-                #response = CF.person.get(self.PERSON_GROUP_ID, person_id)
-                #results.append(response)
 
             new_results = self.resolve_full_face_info(results)
             return new_results

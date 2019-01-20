@@ -62,7 +62,7 @@ def detect_face():
         print(result)
     else:
         # print("Empty List")
-        return(jsonify({"error":"You we're not found."}))
+        return(jsonify({"error": "I'm sorry. I don't see anyone else."}))
 
 
     hist_ref = root.child('history')
