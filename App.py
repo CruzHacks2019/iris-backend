@@ -40,7 +40,7 @@ def index():
 def detect_face():
     img_content = request.data
     decoded_img = base64.b64decode(img_content)
-    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
+    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".jpg"
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
 
@@ -92,7 +92,7 @@ def update_azure_db():
     base64image = data["file"].split(',')[-1]
 
     decoded_img = base64.b64decode(base64image)
-    img_path = "uploads/" + md5(base64image.encode('utf-8')).hexdigest() + ".png"
+    img_path = "uploads/" + md5(base64image.encode('utf-8')).hexdigest() + ".jpg"
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
     client.add_person(data["name"], data["relation"], img_path, data["notes"])
