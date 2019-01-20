@@ -46,6 +46,8 @@ def detect_face():
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
 
+    print(">> check point 1: " + str(time.time() - start_time))
+
     start_upload_time = time.time()
 
     def upload_to_cloud_storage(storage, bucket_name, filename, img_path):
@@ -67,6 +69,8 @@ def detect_face():
     end_upload_time = time.time()
     print("total time to upload: " + str(end_upload_time - start_upload_time))
 
+    print(">> check point 2: " + str(time.time() - start_time))
+
     url = "https://storage.cloud.google.com/history-images-3519435695/"+ filename
 
     start_face_time = time.time()
@@ -78,6 +82,8 @@ def detect_face():
 
     end_time = time.time()
     print("total time (1): " + str(end_time - start_time))
+
+    print(">> check point 3: " + str(time.time() - start_time))
 
     # this is a list now, what happens if the list is empty?
     print(result)
