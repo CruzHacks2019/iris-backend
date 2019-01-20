@@ -52,10 +52,9 @@ def detect_face():
         """Uploads a file to the bucket."""
         storage_client = storage.Client()
         bucket = storage_client.get_bucket(bucket_name)
-        destination_blob_name = filename
-        blob = bucket.blob(destination_blob_name)
+        blob = bucket.blob(filename)
         blob.upload_from_filename(img_path)
-        print('File {} uploaded to {}.'.format(img_path, destination_blob_name))
+        print('File {} uploaded to {}.'.format(img_path, filename))
     
     thread = Thread(target=upload_to_cloud_storage, kwargs={
         'storage': storage,
@@ -68,7 +67,7 @@ def detect_face():
     end_upload_time = time.time()
     print("total time to upload: " + str(end_upload_time - start_upload_time))
 
-    url = "https://storage.cloud.google.com/history-images-3519435695/"+ destination_blob_name
+    url = "https://storage.cloud.google.com/history-images-3519435695/"+ filename
 
     start_face_time = time.time()
 
