@@ -39,11 +39,7 @@ def detect_face():
 
     img_content = request.data
     decoded_img = base64.b64decode(img_content)
-    
-    start_decode_time = time.time()
     filename = md5(img_content.decode().encode('utf-8')).hexdigest()
-    end_decode_time = time.time()
-    print("total time to decode: " + str(end_decode_time - start_decode_time))
 
     img_path = "uploads/" + filename + ".jpg"
     with open(img_path, "wb") as fh:
@@ -51,13 +47,22 @@ def detect_face():
 
     start_upload_time = time.time()
 
-    """Uploads a file to the bucket."""
-    storage_client = storage.Client()
-    bucket = storage_client.get_bucket(bucket_name)
-    destination_blob_name = filename
-    blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename(img_path)
-    print('File {} uploaded to {}.'.format(img_path, destination_blob_name))
+    def upload_to_cloud_storage(storage, bucket_name, filename, img_path):
+        """Uploads a file to the bucket."""
+        storage_client = storage.Client()
+        bucket = storage_client.get_bucket(bucket_name)
+        destination_blob_name = filename
+        blob = bucket.blob(destination_blob_name)
+        blob.upload_from_filename(img_path)
+        print('File {} uploaded to {}.'.format(img_path, destination_blob_name))
+    
+    thread = Thread(target=upload_to_cloud_storage, kwargs={
+        'storage': storage,
+        'bucket_name': bucket_name,
+        'filename': filename,
+        'img_path': img_path
+    })
+    thread.start()
 
     end_upload_time = time.time()
     print("total time to upload: " + str(end_upload_time - start_upload_time))
