@@ -56,17 +56,18 @@ def detect_face():
     # this is a list now, what happens if the list is empty?
     print(result)
     if len(result) > 0:
-        result[0]['msg'] = "You met " + result[0]["name"] + " he is your " + result[0]["userData"] + "."
+        # result[0]['msg'] = "You met " + result[0]["name"] + " he is your " + result[0]["userData"] + "."
+        print(result)
     else:
         # print("Empty List")
         return(jsonify({"error":"You we're not found."}))
 
 
     user_ref = root.child('history')
-    user_ref.child(result[0]['personId']).set(
+    user_ref.child(str(int(time.time() * 1000))).set(
         {
             'imgUrls': url,
-            'time': int(time.time() * 1000)
+            'personId': result[0]['personId'] 
         }
     )
 
