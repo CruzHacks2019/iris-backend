@@ -2,7 +2,7 @@ from APIClient import *
 """
 2019 Cruz Hacks
 """
-client = APIClient("people_six")
+client = APIClient("people_seven")
 # client.create_database("Known Users")
 # client.add_person("Tejas", "Testing", "static/tejas/*.jpg")
 # client.add_person("Andrew", "Friend", "static/andrew/*.jpg")
