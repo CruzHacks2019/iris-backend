@@ -54,11 +54,11 @@ def detect_face():
 
     result = client.return_message_from_face(img_path)
     # this is a list now, what happens if the list is empty?
-    #print(result)
+    print(result)
     if len(result) > 0:
         result[0]['msg'] = "You met " + result[0]["name"] + " he is your " + result[0]["userData"] + "."
     else:
-        print("Empty List")
+        # print("Empty List")
         return(jsonify({"error":"You we're not found."}))
 
 
@@ -78,15 +78,18 @@ def get_reminders():
 
 @app.route("/update_azure_db", methods=['POST'])
 def update_azure_db():
-    print(request.json())
+    # print(request.json)
+    data = request.json
     # json_data = request.data
     # json_file = open('json1')
     # json_str = json_file.read()
     # data = json.loads(json_str)[0]
 
-    # decoded_img = base64.b64decode(img_content)
-    # img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
-    # client.add_person(data["name"], data["relation"], data["file"], data["notes"])
+    decoded_img = base64.b64decode(data["file"])
+    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
+    with open(img_path, "wb") as fh:
+        fh.write(decoded_img)
+    client.add_person(data["name"], data["relation"], img_path, data["notes"])
     # client.train_data()
     # client.print_list()
     print("/update_azure_db called")

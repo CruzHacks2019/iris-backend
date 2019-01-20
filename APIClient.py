@@ -89,7 +89,7 @@ class APIClient:
                 #response = CF.person.get(self.PERSON_GROUP_ID, person_id)
                 #results.append(response)
             return results
-        return [{"error": "There is no person in view."}]
+        return []
         
 
     def print_status(self):
