@@ -74,6 +74,9 @@ def detect_face():
     end_face_time = time.time()
     print("total time to face identify: " + str(end_face_time - start_face_time))
 
+    end_time = time.time()
+    print("total time (1): " + str(end_time - start_time))
+
     # this is a list now, what happens if the list is empty?
     print(result)
     if len(result) > 0:
@@ -94,7 +97,7 @@ def detect_face():
         )
     
     end_time = time.time()
-    print("total time: " + str(end_time - start_time))
+    print("total time (2): " + str(end_time - start_time))
 
     return jsonify(result)
 
