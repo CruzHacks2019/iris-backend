@@ -1,0 +1,20 @@
+[
+    {
+        "candidates": [
+            {
+                "confidence": 0.77055,
+                "personId": "1a36acde-d56c-403b-af46-dff7c9186cef"
+            }
+        ],
+        "faceId": "sample-id"
+    },
+    {
+        "candidates": [
+            {
+                "confidence": 0.74704,
+                "personId": "bde3b897-56e6-4776-a872-105b16a4d23f"
+            }
+        ],
+        "faceId": "sample-id"
+    }
+]

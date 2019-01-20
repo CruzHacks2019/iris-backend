@@ -104,6 +104,9 @@ class APIClient:
             return results
         return []
         
+    def resolve_full_face_info(self, sample_json):
+        personIds = [info["candidates"][0]["personId"] for info in sample_json]
+
 
     def print_status(self):
         response = CF.person_group.get_status(self.PERSON_GROUP_ID)
@@ -117,3 +120,8 @@ class APIClient:
         CF.person_group.train(self.PERSON_GROUP_ID)
 
 
+if __name__ == "__main__":
+    import json
+    client = APIClient("people_six")
+    result = client.resolve_full_face_info(json.load(open('sample-face-result.json', 'r')))
+    print(result)
