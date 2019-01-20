@@ -38,6 +38,8 @@ def index():
 
 @app.route('/detect-face', methods=['POST'])
 def detect_face():
+    start_time = time.time()
+
     img_content = request.data
     decoded_img = base64.b64decode(img_content)
     
@@ -90,6 +92,9 @@ def detect_face():
                 'personId': person_id
             }
         )
+    
+    end_time = time.time()
+    print("total time: " + str(end_time - start_time))
 
     return jsonify(result)
 
