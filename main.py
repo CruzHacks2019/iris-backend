@@ -20,9 +20,8 @@ from google.cloud import storage
 # The name for the new bucket
 bucket_name = 'history-images-3519435695'
 # bucket = storage_client.create_bucket(bucket_name)
-"""
 
-"""
+
 app = Flask(__name__)
 CORS(app)
 bootstrap = Bootstrap(app)
@@ -106,6 +105,12 @@ def update_azure_db():
     client.print_list()
     print("/update_azure_db called")
     return jsonify({"error": "Do not access"})
+
+@app.route("/set-reminder-epoch", methods=["GET"])
+def set_reminder_epoch():
+    mins = int(request.args.get('mins', default = 30))
+    client.set_reminder_epoch_group(mins * 60 * 1000, 10 * 1000)
+    return jsonify({'status': 'success'})
 
 @app.route("/get_history", methods=["POST"])
 def get_history():
