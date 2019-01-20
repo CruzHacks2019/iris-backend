@@ -7,3 +7,4 @@ pillow
 glob3
 firebase-admin
 google-cloud-storage
+flask-cors

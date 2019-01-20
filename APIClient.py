@@ -37,7 +37,7 @@ class APIClient:
     def create_database(self, name):
         CF.person_group.create(self.PERSON_GROUP_ID, name)
 
-    def add_person(self, name, user_data, img_dir):
+    def add_person(self, name, user_data, img_dir, additionalMsg=None):
         response = CF.person.create(self.PERSON_GROUP_ID, name, user_data)
         person_id = response["personId"] 
         ref = CF.person.get(self.PERSON_GROUP_ID, person_id)
@@ -48,7 +48,7 @@ class APIClient:
                 "userData" : ref['userData'], 
                 "imgUrls": [], 
                 "msg" : "You met " + ref["name"] + " he is your " + ref["userData"] + ".",
-                "additionalMsg" : "Replace Me"
+                "additionalMsg" : additionalMsg
             }
         )
 

@@ -1,11 +1,13 @@
 from flask import Flask, render_template, jsonify, request
 from flask_bootstrap import Bootstrap
+from flask_cors import CORS
 import base64
 from hashlib import md5
 from APIClient import *
 import firebase_admin
 from firebase_admin import credentials, db
 import time
+import json
 
 cred = credentials.Certificate('project-anti-alz-firebase-adminsdk-zlh54-decaa0ce0a.json') 
 # firebase_admin.initialize_app(cred, {'databaseURL' : 'https://project-anti-alz.firebaseio.com/'})
@@ -24,6 +26,7 @@ bucket_name = 'history-images-3519435695'
 
 """
 app = Flask(__name__)
+CORS(app)
 bootstrap = Bootstrap(app)
 client = APIClient("people_six")
 
@@ -51,7 +54,7 @@ def detect_face():
 
     result = client.return_message_from_face(img_path)
     # this is a list now, what happens if the list is empty?
-    print(result)
+    #print(result)
     if len(result) > 0:
         result[0]['msg'] = "You met " + result[0]["name"] + " he is your " + result[0]["userData"] + "."
     else:
@@ -75,12 +78,24 @@ def get_reminders():
 
 @app.route("/update_azure_db", methods=['POST'])
 def update_azure_db():
-    img_content = request.data
-    decoded_img = base64.b64decode(img_content)
-    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
-    client.add_person("Need to FIll Name", "Relationship", img_path)
-    return jsonify({"error":"Do not access"})
+    print(request.json())
+    # json_data = request.data
+    # json_file = open('json1')
+    # json_str = json_file.read()
+    # data = json.loads(json_str)[0]
 
+    # decoded_img = base64.b64decode(img_content)
+    # img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
+    # client.add_person(data["name"], data["relation"], data["file"], data["notes"])
+    # client.train_data()
+    # client.print_list()
+    print("/update_azure_db called")
+    return jsonify({"error": "Do not access"})
+
+@app.route("/get_history", methods=["POST"])
+def get_history():
+    users = root.child("history").get()
+    return jsonify(users)
 
 if __name__=='__main__':
     app.run(debug=True)
