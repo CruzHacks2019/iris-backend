@@ -37,6 +37,7 @@ def index():
 @app.route('/detect-face', methods=['POST'])
 def detect_face():
     start_time = time.time()
+    print(">> check point -3: " + str(time.time() - start_time))
 
     img_content = request.data
     print(">> check point -2: " + str(time.time() - start_time))
