@@ -3,6 +3,13 @@ from flask_bootstrap import Bootstrap
 import base64
 from hashlib import md5
 from APIClient import *
+import firebase_admin
+from firebase_admin import credentials, db
+import time
+
+cred = credentials.Certificate('project-anti-alz-firebase-adminsdk-zlh54-decaa0ce0a.json') 
+# firebase_admin.initialize_app(cred, {'databaseURL' : 'https://project-anti-alz.firebaseio.com/'})
+root = db.reference()
 
 # Imports the Google Cloud client library
 from google.cloud import storage
@@ -11,7 +18,8 @@ from google.cloud import storage
 storage_client = storage.Client()
 
 # The name for the new bucket
-bucket_name = 'training-images-3519435695'
+bucket_name = 'history-images-3519435695'
+# bucket = storage_client.create_bucket(bucket_name)
 """
 
 """
@@ -39,11 +47,20 @@ def detect_face():
     blob.upload_from_filename("uploads/" + destination_blob_name + ".png")
     print('File {} uploaded to {}.'.format("uploads/" + destination_blob_name + ".png", destination_blob_name))
 
-    url = "https://storage.cloud.google.com/training-images-3519435695/"+ destination_blob_name
+    url = "https://storage.cloud.google.com/history-images-3519435695/"+ destination_blob_name
 
-    # result = client.return_message_from_face(img_path)
-    # result['msg'] = "You met " + result["name"] + " he is your " + result["userData"] + "."
-    # return jsonify(result)
+    result = client.return_message_from_face(img_path)
+    result['msg'] = "You met " + result["name"] + " he is your " + result["userData"] + "."
+
+    user_ref = root.child('history')
+    user_ref.child(result['personId']).set(
+        {
+            'imgUrls': url,
+            'time': int(time.time() * 1000)
+        }
+    )
+
+    return jsonify(result)
 
 @app.route('/reminders', methods=['GET'])
 def get_reminders():
