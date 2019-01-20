@@ -63,13 +63,14 @@ def detect_face():
         return(jsonify({"error":"You we're not found."}))
 
 
-    # user_ref = root.child('history')
-    # user_ref.child(str(int(time.time() * 1000))).set(
-    #     {
-    #         'imgUrls': url,
-    #         'personId': result[0]['personId']
-    #     }
-    # )
+    hist_ref = root.child('history')
+    for person_id, person_info in result.items():
+        hist_ref.child(str(int(time.time() * 1000))).set(
+            {
+                'imgUrls': url,
+                'personId': person_id
+            }
+        )
 
     return jsonify(result)
 
