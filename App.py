@@ -49,8 +49,8 @@ def detect_face():
     bucket = storage_client.get_bucket(bucket_name)
     destination_blob_name = md5(img_content.decode().encode('utf-8')).hexdigest()
     blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename("uploads/" + destination_blob_name + ".png")
-    print('File {} uploaded to {}.'.format("uploads/" + destination_blob_name + ".png", destination_blob_name))
+    blob.upload_from_filename("uploads/" + destination_blob_name + ".jpg")
+    print('File {} uploaded to {}.'.format("uploads/" + destination_blob_name + ".jpg", destination_blob_name))
 
     url = "https://storage.cloud.google.com/history-images-3519435695/"+ destination_blob_name
 
