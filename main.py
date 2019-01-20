@@ -42,6 +42,8 @@ def detect_face():
     decoded_img = base64.b64decode(img_content)
     filename = md5(img_content.decode().encode('utf-8')).hexdigest()
 
+    print(">> check point 0: " + str(time.time() - start_time))
+
     img_path = "uploads/" + filename + ".jpg"
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
