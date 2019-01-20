@@ -36,24 +36,14 @@ def index():
 
 @app.route('/detect-face', methods=['POST'])
 def detect_face():
-    start_time = time.time()
-    print(">> check point -3: " + str(time.time() - start_time))
-
     img_content = request.data
-    print(">> check point -2: " + str(time.time() - start_time))
+    print(type(img_content))
     decoded_img = base64.b64decode(img_content)
-    print(">> check point -1: " + str(time.time() - start_time))
-    filename = md5(img_content.decode().encode('utf-8')).hexdigest()
-
-    print(">> check point 0: " + str(time.time() - start_time))
+    filename = md5(img_content).hexdigest() # .decode().encode('utf-8')
 
     img_path = "uploads/" + filename + ".jpg"
     with open(img_path, "wb") as fh:
-        fh.write(decoded_img)
-
-    print(">> check point 1: " + str(time.time() - start_time))
-
-    start_upload_time = time.time()
+        fh.write(img_content) #  decoded_img
 
     def upload_to_cloud_storage(storage, bucket_name, filename, img_path):
         """Uploads a file to the bucket."""
@@ -71,24 +61,8 @@ def detect_face():
     })
     thread.start()
 
-    end_upload_time = time.time()
-    print("total time to upload: " + str(end_upload_time - start_upload_time))
-
-    print(">> check point 2: " + str(time.time() - start_time))
-
     url = "https://storage.cloud.google.com/history-images-3519435695/"+ filename
-
-    start_face_time = time.time()
-
     result = client.return_message_from_face(img_path)
-
-    end_face_time = time.time()
-    print("total time to face identify: " + str(end_face_time - start_face_time))
-
-    end_time = time.time()
-    print("total time (1): " + str(end_time - start_time))
-
-    print(">> check point 3: " + str(time.time() - start_time))
 
     # this is a list now, what happens if the list is empty?
     print(result)
@@ -108,9 +82,6 @@ def detect_face():
                 'personId': person_id
             }
         )
-    
-    end_time = time.time()
-    print("total time (2): " + str(end_time - start_time))
 
     return jsonify(result)
 
