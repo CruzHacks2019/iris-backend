@@ -28,7 +28,7 @@ bucket_name = 'history-images-3519435695'
 app = Flask(__name__)
 CORS(app)
 bootstrap = Bootstrap(app)
-client = APIClient("people_eight")
+client = APIClient("people_13")
 
 epoch = lambda: int(time.time() * 1000)
 

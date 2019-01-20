@@ -47,7 +47,7 @@ class APIClient:
                 "name" : ref['name'], 
                 "userData" : ref['userData'], 
                 "imgUrls": [], 
-                "msg" : "You met " + ref["name"] + " he is your " + ref["userData"] + ".",
+                "msg" : "That's " + ref["name"] + ", " + ref["userData"] + ".",
                 "additionalMsg" : additionalMsg
             }
         )
@@ -128,6 +128,6 @@ class APIClient:
 
 if __name__ == "__main__":
     import json
-    client = APIClient("people_six")
+    client = APIClient("people_13")
     result = client.resolve_full_face_info(json.load(open('sample-face-result.json', 'r')))
     print(result)
