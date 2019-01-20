@@ -28,7 +28,7 @@ bucket_name = 'history-images-3519435695'
 app = Flask(__name__)
 CORS(app)
 bootstrap = Bootstrap(app)
-client = APIClient("people_seven")
+client = APIClient("people_eight")
 
 epoch = lambda: int(time.time() * 1000)
 
@@ -96,8 +96,8 @@ def update_azure_db():
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
     client.add_person(data["name"], data["relation"], img_path, data["notes"])
-    # client.train_data()
-    # client.print_list()
+    client.train_data()
+    client.print_list()
     print("/update_azure_db called")
     return jsonify({"error": "Do not access"})
 
