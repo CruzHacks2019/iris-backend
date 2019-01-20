@@ -8,6 +8,7 @@ import firebase_admin
 from firebase_admin import credentials, db
 import time
 import json
+from threading import Thread
 
 cred = credentials.Certificate('project-anti-alz-firebase-adminsdk-zlh54-decaa0ce0a.json') 
 # firebase_admin.initialize_app(cred, {'databaseURL' : 'https://project-anti-alz.firebaseio.com/'})
