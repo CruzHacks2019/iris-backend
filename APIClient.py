@@ -52,26 +52,38 @@ class APIClient:
             }
         )
 
-        for img in glob.glob(img_dir):
-            CF.person.add_face(img, self.PERSON_GROUP_ID, person_id)
-            # now we need to add imgs to cloud in here
-            """Uploads a file to the bucket."""
+        if "uploads" in str(img_dir):
+            CF.person.add_face(img_dir, self.PERSON_GROUP_ID, person_id)
             storage_client = storage.Client()
             bucket = storage_client.get_bucket(bucket_name)
-            destination_blob_name = md5(img.encode('utf-8')).hexdigest()
+            destination_blob_name = md5(img_dir.encode('utf-8')).hexdigest()
             blob = bucket.blob(destination_blob_name)
-            blob.upload_from_filename(img)
+            blob.upload_from_filename(img_dir)
 
             url = "https://storage.cloud.google.com/training-images-3519435695/"+ destination_blob_name
             root.child('users').child(person_id).child('imgUrls').push(url)
+            print('File {} uploaded to {}.'.format(img_dir, destination_blob_name))
+        else:
+            for img in glob.glob(img_dir):
+                CF.person.add_face(img, self.PERSON_GROUP_ID, person_id)
+                # now we need to add imgs to cloud in here
+                """Uploads a file to the bucket."""
+                storage_client = storage.Client()
+                bucket = storage_client.get_bucket(bucket_name)
+                destination_blob_name = md5(img.encode('utf-8')).hexdigest()
+                blob = bucket.blob(destination_blob_name)
+                blob.upload_from_filename(img)
 
-            # new_array = []
-            # for img in user_ref["imgUrls"]:
-            #     new_array.append(img)
-            # new_array.append(url)
-            # user_ref.update({'imgUrls':new_array})
+                url = "https://storage.cloud.google.com/training-images-3519435695/"+ destination_blob_name
+                root.child('users').child(person_id).child('imgUrls').push(url)
 
-            print('File {} uploaded to {}.'.format(img, destination_blob_name))
+                # new_array = []
+                # for img in user_ref["imgUrls"]:
+                #     new_array.append(img)
+                # new_array.append(url)
+                # user_ref.update({'imgUrls':new_array})
+
+                print('File {} uploaded to {}.'.format(img, destination_blob_name))
     
     def fetch_all_reminders(self):
         reminders_ref = root.child('reminders')

@@ -84,9 +84,10 @@ def update_azure_db():
     # json_file = open('json1')
     # json_str = json_file.read()
     # data = json.loads(json_str)[0]
+    base64image = data["file"].split(',')[-1]
 
-    decoded_img = base64.b64decode(data["file"])
-    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
+    decoded_img = base64.b64decode(base64image)
+    img_path = "uploads/" + md5(base64image.encode('utf-8')).hexdigest() + ".png"
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
     client.add_person(data["name"], data["relation"], img_path, data["notes"])
