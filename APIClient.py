@@ -84,9 +84,10 @@ class APIClient:
             results = []
             identified_faces = CF.face.identify(face_ids, self.PERSON_GROUP_ID)
             for x in identified_faces:
-                person_id = x['candidates'][0]['personId']
-                response = CF.person.get(self.PERSON_GROUP_ID, person_id)
-                results.append(response)
+                print(x)
+                #person_id = x['candidates'][0]['personId']
+                #response = CF.person.get(self.PERSON_GROUP_ID, person_id)
+                #results.append(response)
             return results
         return [{"error": "There is no person in view."}]
         

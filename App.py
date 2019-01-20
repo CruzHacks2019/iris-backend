@@ -50,10 +50,17 @@ def detect_face():
     url = "https://storage.cloud.google.com/history-images-3519435695/"+ destination_blob_name
 
     result = client.return_message_from_face(img_path)
-    result['msg'] = "You met " + result["name"] + " he is your " + result["userData"] + "."
+    # this is a list now, what happens if the list is empty?
+    print(result)
+    if len(result) > 0:
+        result[0]['msg'] = "You met " + result[0]["name"] + " he is your " + result[0]["userData"] + "."
+    else:
+        print("Empty List")
+        return(jsonify({"error":"You we're not found."}))
+
 
     user_ref = root.child('history')
-    user_ref.child(result['personId']).set(
+    user_ref.child(result[0]['personId']).set(
         {
             'imgUrls': url,
             'time': int(time.time() * 1000)
@@ -65,6 +72,15 @@ def detect_face():
 @app.route('/reminders', methods=['GET'])
 def get_reminders():
     return jsonify(client.fetch_all_reminders())
+
+@app.route("/update_azure_db", methods=['POST'])
+def update_azure_db():
+    img_content = request.data
+    decoded_img = base64.b64decode(img_content)
+    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".png"
+    client.add_person("Need to FIll Name", "Relationship", img_path)
+    return jsonify({"error":"Do not access"})
+
 
 if __name__=='__main__':
     app.run(debug=True)
