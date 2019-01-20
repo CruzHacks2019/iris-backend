@@ -80,10 +80,16 @@ class APIClient:
     def return_message_from_face(self, path_to_img):
         response = CF.face.detect(path_to_img)
         face_ids = [d['faceId'] for d in response]
-        identified_faces = CF.face.identify(face_ids, self.PERSON_GROUP_ID)
-        person_id = identified_faces[0]['candidates'][0]['personId']
-        response = CF.person.get(self.PERSON_GROUP_ID, person_id)
-        return response 
+        if len(face_ids) != 0:
+            results = []
+            identified_faces = CF.face.identify(face_ids, self.PERSON_GROUP_ID)
+            for x in identified_faces:
+                person_id = x['candidates'][0]['personId']
+                response = CF.person.get(self.PERSON_GROUP_ID, person_id)
+                results.append(response)
+            return results
+        return [{"error": "There is no person in view."}]
+        
 
     def print_status(self):
         response = CF.person_group.get_status(self.PERSON_GROUP_ID)
