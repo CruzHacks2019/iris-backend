@@ -107,7 +107,7 @@ class APIClient:
         return []
         
     def resolve_full_face_info(self, sample_json):
-        person_ids = [info["candidates"][0]["personId"] for info in sample_json]
+        person_ids = [info["candidates"][0]["personId"] for info in sample_json if len(info["candidates"]) != 0]
         final_res = {}
         for person_id in person_ids:
             users_ref = root.child("users")
