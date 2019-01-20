@@ -67,11 +67,7 @@ def detect_face():
     # user_ref.child(str(int(time.time() * 1000))).set(
     #     {
     #         'imgUrls': url,
-<<<<<<< HEAD
-    #         'personId': result[0]['personId'] 
-=======
     #         'personId': result[0]['personId']
->>>>>>> 958e8b7c7e6ea9431c9c7aee1d70bf23b7ca08d4
     #     }
     # )
 
