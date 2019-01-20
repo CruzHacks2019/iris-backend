@@ -101,11 +101,17 @@ class APIClient:
                 #person_id = x['candidates'][0]['personId']
                 #response = CF.person.get(self.PERSON_GROUP_ID, person_id)
                 #results.append(response)
-            return results
+
+            new_results = self.resolve_full_face_info(results)
+            return new_results
         return []
         
     def resolve_full_face_info(self, sample_json):
-        personIds = [info["candidates"][0]["personId"] for info in sample_json]
+        person_ids = [info["candidates"][0]["personId"] for info in sample_json]
+        for person_id in person_ids:
+            users_ref = root.child("users")
+            user_data = users_ref.child(person_id).get()
+            print(user_data)
 
 
     def print_status(self):
