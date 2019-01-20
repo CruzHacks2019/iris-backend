@@ -72,6 +72,10 @@ class APIClient:
             # user_ref.update({'imgUrls':new_array})
 
             print('File {} uploaded to {}.'.format(img, destination_blob_name))
+    
+    def fetch_all_reminders(self):
+        reminders_ref = root.child('reminders')
+        return reminders_ref.get()
 
     def return_message_from_face(self, path_to_img):
         response = CF.face.detect(path_to_img)

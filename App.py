@@ -45,5 +45,9 @@ def detect_face():
     # result['msg'] = "You met " + result["name"] + " he is your " + result["userData"] + "."
     # return jsonify(result)
 
+@app.route('/reminders', methods=['GET'])
+def get_reminders():
+    pass
+
 if __name__=='__main__':
     app.run(debug=True)
