@@ -37,13 +37,11 @@ def index():
 @app.route('/detect-face', methods=['POST'])
 def detect_face():
     img_content = request.data
-    print(type(img_content))
-    decoded_img = base64.b64decode(img_content)
-    filename = md5(img_content).hexdigest() # .decode().encode('utf-8')
+    filename = md5(img_content).hexdigest()
 
     img_path = "uploads/" + filename + ".jpg"
     with open(img_path, "wb") as fh:
-        fh.write(img_content) #  decoded_img
+        fh.write(img_content)
 
     def upload_to_cloud_storage(storage, bucket_name, filename, img_path):
         """Uploads a file to the bucket."""
