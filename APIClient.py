@@ -114,6 +114,7 @@ class APIClient:
             user_data = users_ref.child(person_id).get()
             final_res[person_id] = user_data
             print(user_data)
+        return final_res
 
 
     def print_status(self):
