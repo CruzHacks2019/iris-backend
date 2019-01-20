@@ -54,7 +54,7 @@ def detect_face():
 
     result = client.return_message_from_face(img_path)
     # this is a list now, what happens if the list is empty?
-    #print(result)
+    print(result)
     if len(result) > 0:
         result[0]['msg'] = "You met " + result[0]["name"] + " he is your " + result[0]["userData"] + "."
     else:
