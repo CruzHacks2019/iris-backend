@@ -30,6 +30,8 @@ CORS(app)
 bootstrap = Bootstrap(app)
 client = APIClient("people_seven")
 
+epoch = lambda: int(time.time() * 1000)
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -65,8 +67,9 @@ def detect_face():
 
     hist_ref = root.child('history')
     for person_id, person_info in result.items():
-        hist_ref.child(str(int(time.time() * 1000))).set(
+        hist_ref.child(str(epoch()) + '|' + person_id).set(
             {
+
                 'imgUrls': url,
                 'personId': person_id
             }
