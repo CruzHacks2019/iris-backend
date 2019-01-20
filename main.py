@@ -40,21 +40,38 @@ def index():
 def detect_face():
     img_content = request.data
     decoded_img = base64.b64decode(img_content)
-    img_path = "uploads/" + md5(img_content.decode().encode('utf-8')).hexdigest() + ".jpg"
+    
+    start_decode_time = time.time()
+    filename = md5(img_content.decode().encode('utf-8')).hexdigest()
+    end_decode_time = time.time()
+    print("total time to decode: " + str(end_decode_time - start_decode_time))
+
+    img_path = "uploads/" + filename + ".jpg"
     with open(img_path, "wb") as fh:
         fh.write(decoded_img)
+
+    start_upload_time = time.time()
 
     """Uploads a file to the bucket."""
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket_name)
-    destination_blob_name = md5(img_content.decode().encode('utf-8')).hexdigest()
+    destination_blob_name = filename
     blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename("uploads/" + destination_blob_name + ".jpg")
-    print('File {} uploaded to {}.'.format("uploads/" + destination_blob_name + ".jpg", destination_blob_name))
+    blob.upload_from_filename(img_path)
+    print('File {} uploaded to {}.'.format(img_path, destination_blob_name))
+
+    end_upload_time = time.time()
+    print("total time to upload: " + str(end_upload_time - start_upload_time))
 
     url = "https://storage.cloud.google.com/history-images-3519435695/"+ destination_blob_name
 
+    start_face_time = time.time()
+
     result = client.return_message_from_face(img_path)
+
+    end_face_time = time.time()
+    print("total time to face identify: " + str(end_face_time - start_face_time))
+
     # this is a list now, what happens if the list is empty?
     print(result)
     if len(result) > 0:
@@ -69,7 +86,6 @@ def detect_face():
     for person_id, person_info in result.items():
         hist_ref.child(str(epoch()) + '|' + person_id).set(
             {
-
                 'imgUrls': url,
                 'personId': person_id
             }
