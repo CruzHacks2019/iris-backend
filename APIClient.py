@@ -42,15 +42,15 @@ class APIClient:
         person_id = response["personId"] 
         ref = CF.person.get(self.PERSON_GROUP_ID, person_id)
         user_ref = root.child('users')
-        user_ref.set({
-            person_id : {
+        user_ref.child(person_id).set(
+            {
                 "name" : ref['name'], 
                 "userData" : ref['userData'], 
                 "imgUrls": [], 
                 "msg" : "You met " + ref["name"] + " he is your " + ref["userData"] + ".",
                 "additionalMsg" : "Replace Me"
             }
-        })
+        )
 
         for img in glob.glob(img_dir):
             CF.person.add_face(img, self.PERSON_GROUP_ID, person_id)
@@ -63,11 +63,13 @@ class APIClient:
             blob.upload_from_filename(img)
 
             url = "https://storage.cloud.google.com/training-images-3519435695/"+ destination_blob_name
-            new_array = []
-            for img in user_ref["imgUrls"]:
-                new_array.append(img)
-            new_array.append(url)
-            user_ref.update({imgUrls:new_array})
+            root.child('users').child(person_id).child('imgUrls').push(url)
+
+            # new_array = []
+            # for img in user_ref["imgUrls"]:
+            #     new_array.append(img)
+            # new_array.append(url)
+            # user_ref.update({'imgUrls':new_array})
 
             print('File {} uploaded to {}.'.format(img, destination_blob_name))
 
