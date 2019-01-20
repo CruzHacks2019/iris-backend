@@ -39,7 +39,9 @@ def detect_face():
     start_time = time.time()
 
     img_content = request.data
+    print(">> check point -2: " + str(time.time() - start_time))
     decoded_img = base64.b64decode(img_content)
+    print(">> check point -1: " + str(time.time() - start_time))
     filename = md5(img_content.decode().encode('utf-8')).hexdigest()
 
     print(">> check point 0: " + str(time.time() - start_time))
