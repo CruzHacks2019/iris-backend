@@ -47,7 +47,7 @@ def detect_face():
 
 @app.route('/reminders', methods=['GET'])
 def get_reminders():
-    pass
+    return jsonify(client.fetch_all_reminders())
 
 if __name__=='__main__':
     app.run(debug=True)
